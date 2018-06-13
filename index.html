@@ -3,10 +3,30 @@
 <head>
 	<meta charset="UTF-8">
 	<title>Kimura Shogi</title>
+  <link rel="stylesheet" href="reset.css">
 	<link rel="stylesheet" href="main.css">
 </head>
 <body>
-	<h1>Hello World!</h1>
+	<div id="board"></div>
+  <script>
+    // #boardのelementを取得
+    var board = document.getElementById("board");
+
+    // パフォーマンスのためにfragmentを使って1回のDOMアクセスにする
+    
+    // fragmentをつくる
+    var fragment = document.createDocumentFragment();
+
+    // fragmentに要素を入れていく
+    for (var cnt = 0; cnt < 81; cnt++) {
+      var element = document.createElement("div");
+      element.classList.add("cell");
+      fragment.appendChild(element);
+    }
+    
+    // boardの子要素に追加する
+    board.appendChild(fragment);
+  </script>
 </body>
 </html>
 
