@@ -1,5 +1,6 @@
 @charset "utf-8";
 
+/* 将棋盤 */
 #board {
   display: flex;
   align-content: flex-start;
@@ -7,12 +8,47 @@
   margin: 30px auto 0 auto;
   width: 540px;
   height: 540px;
-  border: 1px solid #ccc;
 }
+
+/* ひとマス */
 .cell {
   width: 60px;
   height: 60px;
-  border-bottom: 1px solid red;
-  border-right: 1px solid red;
+  border: 1px solid #ccc;
 }
-.cell
+.cell::before {
+  display: block;
+  width: 100%;
+  height: 100%;
+  font-size: 32px;
+  text-align: center;
+  line-height: 60px;
+}
+.OU::before { content: "王"; }
+.gyoku::before { content: "玉"; }
+.HI::before { content: "飛"; }
+.ryu::before { content: "龍"; }
+.KA::before { content: "角"; }
+.uma::before { content: "馬"; }
+.KI::before { content: "金"; }
+.GI::before { content: "銀"; }
+.KE::before { content: "桂"; }
+.KY::before { content: "香"; }
+.nari::before { content: "成"; }
+.FU::before { content: "歩"; }
+.to::before { content: "と"; }
+
+.ryu,
+.uma,
+.nari,
+.to {
+  color: red;
+}
+
+.white {
+
+}
+
+.black {
+  transform:rotateX(180deg);
+}

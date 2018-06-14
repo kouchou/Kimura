@@ -8,25 +8,6 @@
 </head>
 <body>
 	<div id="board"></div>
-  <script>
-    // #boardのelementを取得
-    var board = document.getElementById("board");
-
-    // パフォーマンスのためにfragmentを使って1回のDOMアクセスにする
-    
-    // fragmentをつくる
-    var fragment = document.createDocumentFragment();
-
-    // fragmentに要素を入れていく
-    for (var cnt = 0; cnt < 81; cnt++) {
-      var element = document.createElement("div");
-      element.classList.add("cell");
-      fragment.appendChild(element);
-    }
-    
-    // boardの子要素に追加する
-    board.appendChild(fragment);
-  </script>
+  <script src="main.js"></script>
 </body>
 </html>
-
