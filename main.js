@@ -23,6 +23,7 @@ var createKoma = function(position) {
     row.forEach(function(cell, index) {
       var $element = document.createElement("div");
       $element.classList.add("cell");
+      // 空のオブジェクトならそのまま追加して次のループへ
       if (!Object.keys(cell).length) {
         komaFragment.appendChild($element);
         return;
@@ -32,7 +33,7 @@ var createKoma = function(position) {
       komaFragment.appendChild($element);
     });
   });
-  // boardの子要素に追加する
+  // boardエレメントの子要素に追加する
   $Board.appendChild(komaFragment);
 }
 
