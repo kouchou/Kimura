@@ -29,7 +29,6 @@ board.forEach(function(row, index) {
       fragment.appendChild($element);
       return;
     }
-    console.log(cell[""])
     if (cell["owner"] === 0) {
       $element.classList.add("white");
     } else {
