@@ -1,0 +1,15 @@
+# temp files from editors
+  2 *~
+  3 *.bak
+  4 .DS_Store
+  5 .buildpath
+  6 .project
+  7 .settings
+  8 *.tmproj
+  9 build
+ 10 .idea
+ 11 nbproject/
+ 12
+ 13 # hidden files created by Windows
+ 14 Thumbs.db
+ 15 desktop.ini
