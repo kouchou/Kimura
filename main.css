@@ -25,7 +25,7 @@
   line-height: 60px;
 }
 .OU::before { content: "王"; }
-.gyoku::before { content: "玉"; }
+.GY::before { content: "玉"; }
 .HI::before { content: "飛"; }
 .ryu::before { content: "龍"; }
 .KA::before { content: "角"; }
