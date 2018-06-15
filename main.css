@@ -16,6 +16,9 @@
   height: 60px;
   border: 1px solid #ccc;
 }
+.cell:hover {
+  background-color: #eee;
+}
 .cell::before {
   display: block;
   width: 100%;
@@ -27,23 +30,12 @@
 .OU::before { content: "王"; }
 .GY::before { content: "玉"; }
 .HI::before { content: "飛"; }
-.ryu::before { content: "龍"; }
 .KA::before { content: "角"; }
-.uma::before { content: "馬"; }
 .KI::before { content: "金"; }
 .GI::before { content: "銀"; }
 .KE::before { content: "桂"; }
 .KY::before { content: "香"; }
-.nari::before { content: "成"; }
 .FU::before { content: "歩"; }
-.to::before { content: "と"; }
-
-.ryu,
-.uma,
-.nari,
-.to {
-  color: red;
-}
 
 .white {
 
