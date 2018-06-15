@@ -38,3 +38,17 @@ var createKoma = function(position) {
 }
 
 createKoma(initPosition);
+
+var getCoordinatesByCellId = function(id) {
+  y = parseInt((id - 1) / 9) + 1;
+  x = 9 - (id - 1) % 9;
+  return [x, y];
+}
+
+var getCellIDbyCoordinates = function(x, y) {
+  return (y - 1) * 9 + (10 - x);
+}
+
+var placeFu = function(kind) {
+
+}
