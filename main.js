@@ -23,62 +23,65 @@ var createKoma = function(position) {
   position.forEach(function(row, colIndex) {
     row.forEach(function(cell, rowIndex) {
       // div要素を生成
-      var $element = document.createElement("div");
+      var $Element = document.createElement("div");
       // cellクラスを付与
-      $element.classList.add("cell");
+      $Element.classList.add("cell");
       // セルIDを付与
-      $element.id = "cell" + (colIndex * 9 + rowIndex + 1);
+      $Element.id = "cell" + (colIndex * 9 + rowIndex + 1);
       // イベントリスナーを設定
-      $element.onclick = function(event) {
+      $Element.onclick = function(event) {
         komaClickHundler(event.target);
       }
       // 空のオブジェクトならそのまま追加して次のループへ
       if (!Object.keys(cell).length) {
-        komaFragment.appendChild($element);
+        komaFragment.appendChild($Element);
         return;
       }
-      $element.classList.add(cell["owner"]);
-      $element.classList.add(cell["kind"]);
-      komaFragment.appendChild($element);
+      $Element.classList.add(cell["owner"]);
+      $Element.classList.add(cell["kind"]);
+      komaFragment.appendChild($Element);
     });
   });
   // boardエレメントの子要素に追加する
   $Board.appendChild(komaFragment);
 }
 
-createKoma(initPosition);
-
 // [関数]IDから座標を取得する -> [int, int]
 var getCoordinatesById = function(id) {
-  y = parseInt((id - 1) / 9) + 1;
-  x = 9 - (id - 1) % 9;
+  var y = parseInt((id - 1) / 9) + 1;
+  var x = 9 - (id - 1) % 9;
   return [x, y];
 }
 // [関数]座標からIDを取得する -> int
-var getIDbyCoordinates = function(x, y) {
+var getIdByCoordinates = function(x, y) {
   return (y - 1) * 9 + (10 - x);
 }
 
-// [関数]要素のエレメントを引数に取り、が先手なのか後手なのか空白なのか -> string
-var getOwner = function($element) {
-  if ($element.classList.contains("white")) {
+// [関数]要素のエレメントを引数に取り、それが先手なのか後手なのか空白なのか -> string
+var getOwner = function($Element) {
+  if ($Element.classList.contains("white")) {
     return "white";
-  } else if ($element.classList.contains("black")) {
+  } else if ($Element.classList.contains("black")) {
     return "black";
   } else {
     return "none";
   }
 }
 
-// [関数]先手後手、駒の種類、セルIDを引数にとり、そのセルをその種類のコマに替える -> null
-var placeKoma = function(owner, kind, cellId) {
-  var $element = document.getElementById(cellId);
-  $element.className = "cell" + " " + owner + " " + kind;
+// [関数]先手後手、駒の種類、座標を引数にとり、そのセルをその種類のコマに替える -> null
+var placeKoma = function(owner, kind, x, y) {
+  var cellId = "cell" + getIdByCoordinates(x, y);
+  var $Element = document.getElementById(cellId);
+  $Element.className = "cell" + " " + owner + " " + kind;
 }
 
 // [関数]駒がクリックされたときの処理
-komaClickHundler = function($element) {
-  var cellID = $element.id;
-  placeKoma("white", "FU", cellID);  
+komaClickHundler = function($Element) {
+  var cellId = $Element.id.substr(4);
+  var coordinates = getCoordinatesById(cellId);
+  placeKoma("white", "FU", coordinates[0], coordinates[1]);  
 }
+
+// 初期配置を生成
+createKoma(initPosition);
 
