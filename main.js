@@ -60,7 +60,7 @@ var createKoma = function(position) {
 komaClickHundler = function($Element) {
   var cellId = $Element.id.substr(4);
   var coordinates = getCoordinatesById(cellId);
-  placeKoma("white", "FU", coordinates[0], coordinates[1]);  
+  placeKoma("white", "FU", coordinates);  
 }
 
 // [関数]IDから座標を取得する -> [int, int]
@@ -70,8 +70,8 @@ var getCoordinatesById = function(id) {
   return [x, y];
 }
 // [関数]座標からIDを取得する -> int
-var getIdByCoordinates = function(x, y) {
-  return (y - 1) * 9 + (10 - x);
+var getIdByCoordinates = function(coordinates) {
+  return (coordinates[1] - 1) * 9 + (10 - coordinates[0]);
 }
 
 // [関数]要素のエレメントを引数に取り、それが先手なのか後手なのか空白なのか -> string
@@ -86,8 +86,8 @@ var getOwner = function($Element) {
 }
 
 // [関数]先手後手、駒の種類、座標を引数にとり、そのセルをその種類のコマに替える -> null
-var placeKoma = function(owner, kind, x, y) {
-  var cellId = "cell" + getIdByCoordinates(x, y);
+var placeKoma = function(owner, kind, coordinates) {
+  var cellId = "cell" + getIdByCoordinates(coordinates);
   var $Element = document.getElementById(cellId);
   $Element.className = "cell" + " " + owner + " " + kind;
 }
