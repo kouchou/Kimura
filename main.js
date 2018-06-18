@@ -13,6 +13,9 @@ store.addKifu = function(owner, kind, from, to, nari) {
 }
 // 手番 String
 store.turn = "white";
+store.getTurn = function() {
+  return store.turn;
+}
 store.changeTurn = function() {
   if (store.turn === "white") {
     store.turn = "black";
@@ -22,8 +25,15 @@ store.changeTurn = function() {
 }
 // 選択されているかどうか bool
 store.isSelected = false;
-store.selectKoma = function(bool) {
-  store.isSelected = bool;
+// 選択されている駒 object
+store.selectedKoma = {};
+store.selectKoma = function(kind, coordinates) {
+  store.isSelected = true;
+  store.selectedKoma = {"kind": kind, "coordinates": coordinates};
+}
+store.unselectKoma = function() {
+  store.isSelected = false;
+  store.selectedKoma = {};
 }
 
 // 初期配置の配列
