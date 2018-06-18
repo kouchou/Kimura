@@ -25,11 +25,11 @@ store.changeTurn = function() {
 }
 // 選択されているかどうか bool
 store.isSelected = false;
-// 選択されている駒 object
-store.selectedKoma = {};
-store.selectKoma = function(kind, coordinates) {
+// 選択されている駒 element
+store.selectedKoma = null;
+store.selectKoma = function($Element) {
   store.isSelected = true;
-  store.selectedKoma = {"kind": kind, "coordinates": coordinates};
+  store.selectedKoma = $Element;
 }
 store.unselectKoma = function() {
   store.isSelected = false;
@@ -86,9 +86,25 @@ var createKoma = function(position) {
 
 // [関数]駒がクリックされたときの処理
 komaClickHundler = function($Element) {
+  console.log([store.turn, store.isSelected, store.selectedKoma], getOwnerByElement($Element), );
   var cellId = $Element.id.substr(4);
   var coordinates = getCoordinatesById(cellId);
-  placeKoma("white", "FU", coordinates);  
+  if (store.isSelected) {
+    var $SelectedElement = store.selectedKoma;
+    $Element.className = $SelectedElement.className;
+    $SelectedElement.className = "cell"
+    store.isSelected = false;
+    store.selectedKoma = null;
+    store.changeTurn();
+  } else {
+    if (getOwnerByElement($Element) === store.getTurn()) {
+      store.isSelected = true;
+      store.selectedKoma = $Element;
+      return;
+    } else {
+      return;
+    }
+  }
 }
 
 // [関数]IDから座標を取得する -> [int, int]
@@ -103,7 +119,7 @@ var getIdByCoordinates = function(coordinates) {
 }
 
 // [関数]要素のエレメントを引数に取り、それが先手なのか後手なのか空白なのか -> string
-var getOwner = function($Element) {
+var getOwnerByElement = function($Element) {
   if ($Element.classList.contains("white")) {
     return "white";
   } else if ($Element.classList.contains("black")) {
