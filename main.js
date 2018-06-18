@@ -3,7 +3,7 @@ store = new Object();
 // 棋譜
 // [{"count": int, "owner": string, "kind": string, "from": [int, int], "to": [int, int], "nari": bool}, {...}]
 store.kifu = [];
-store.addKifu = fucntion(owner, kind, from, to, nari) {
+store.addKifu = function(owner, kind, from, to, nari) {
   if (store.kifu.length > 0) {
     var count = store.kifu[store.kifu.length - 1] + 1;
     store.kifu.push({"count": count, "owner": owner, "kind": kind, "from": from, "to": to, "nari": nari});
