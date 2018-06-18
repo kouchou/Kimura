@@ -3,10 +3,28 @@ store = new Object();
 // 棋譜
 // [{"count": int, "owner": string, "kind": string, "from": [int, int], "to": [int, int], "nari": bool}, {...}]
 store.kifu = [];
+store.addKifu = fucntion(owner, kind, from, to, nari) {
+  if (store.kifu.length > 0) {
+    var count = store.kifu[store.kifu.length - 1] + 1;
+    store.kifu.push({"count": count, "owner": owner, "kind": kind, "from": from, "to": to, "nari": nari});
+  } else {
+    store.kifu.push({"count": 1, "owner": owner, "kind": kind, "from": from, "to": to, "nari": nari});
+  }
+}
 // 手番 String
 store.turn = "white";
+store.changeTurn = function() {
+  if (store.turn === "white") {
+    store.turn = "black";
+  } else {
+    store.turn = "white";
+  }
+}
 // 選択されているかどうか bool
 store.isSelected = false;
+store.selectKoma = function(bool) {
+  store.isSelected = bool;
+}
 
 // 初期配置の配列
 var initPosition = [
