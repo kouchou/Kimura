@@ -1,9 +1,12 @@
 // ストア
 store = new Object();
-
-store.kifu = []; // [{"count": int, "owner": string, "kind": string, "from": [int, int], "to": [int, int], "nari": bool}, {...}]
-store.turn = "white"; // String
-store.isSelected = false; //bool
+// 棋譜
+// [{"count": int, "owner": string, "kind": string, "from": [int, int], "to": [int, int], "nari": bool}, {...}]
+store.kifu = [];
+// 手番 String
+store.turn = "white";
+// 選択されているかどうか bool
+store.isSelected = false;
 
 // 初期配置の配列
 var initPosition = [
@@ -53,6 +56,13 @@ var createKoma = function(position) {
   $Board.appendChild(komaFragment);
 }
 
+// [関数]駒がクリックされたときの処理
+komaClickHundler = function($Element) {
+  var cellId = $Element.id.substr(4);
+  var coordinates = getCoordinatesById(cellId);
+  placeKoma("white", "FU", coordinates[0], coordinates[1]);  
+}
+
 // [関数]IDから座標を取得する -> [int, int]
 var getCoordinatesById = function(id) {
   var y = parseInt((id - 1) / 9) + 1;
@@ -80,13 +90,6 @@ var placeKoma = function(owner, kind, x, y) {
   var cellId = "cell" + getIdByCoordinates(x, y);
   var $Element = document.getElementById(cellId);
   $Element.className = "cell" + " " + owner + " " + kind;
-}
-
-// [関数]駒がクリックされたときの処理
-komaClickHundler = function($Element) {
-  var cellId = $Element.id.substr(4);
-  var coordinates = getCoordinatesById(cellId);
-  placeKoma("white", "FU", coordinates[0], coordinates[1]);  
 }
 
 // 初期配置を生成
