@@ -1,3 +1,10 @@
+// ストア
+store = new Object();
+
+store.kifu = []; // [{"count": int, "owner": string, "kind": string, "from": [int, int], "to": [int, int], "nari": bool}, {...}]
+store.turn = "white"; // String
+store.isSelected = false; //bool
+
 // 初期配置の配列
 var initPosition = [
   [{"owner": "black", "kind": "KY"}, {"owner": "black", "kind": "KE"}, {"owner": "black", "kind": "GI"}, {"owner": "black", "kind": "KI"}, {"owner": "black", "kind": "OU"}, {"owner": "black", "kind": "KI"}, {"owner": "black", "kind": "GI"}, {"owner": "black", "kind": "KE"}, {"owner": "black", "kind": "KY"}],
