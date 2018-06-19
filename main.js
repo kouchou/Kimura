@@ -1,47 +1,4 @@
-// ストア
-store = new Object();
-// 棋譜
-// [{"count": int, "owner": string, "kind": string, "from": [int, int], "to": [int, int], "nari": bool}, {...}]
-store.kifu = [];
-store.addKifu = function(owner, kind, from, to, nari) {
-  if (store.kifu.length > 0) {
-    var count = store.kifu[store.kifu.length - 1] + 1;
-    store.kifu.push({"count": count, "owner": owner, "kind": kind, "from": from, "to": to, "nari": nari});
-  } else {
-    store.kifu.push({"count": 1, "owner": owner, "kind": kind, "from": from, "to": to, "nari": nari});
-  }
-}
-// 手番 String
-store.turn = "white";
-store.getTurn = function() {
-  return store.turn;
-}
-store.changeTurn = function() {
-  if (store.turn === "white") {
-    store.turn = "black";
-  } else {
-    store.turn = "white";
-  }
-}
-
-// 選択されている駒 element
-store.selectedKoma = null;
-store.getSelectedKoma = function() {
-  return store.selectedKoma;
-}
-store.isSelected = function() {
-  if (store.selectedKoma) {
-    return true;
-  } else {
-    return false;
-  }
-}
-store.selectKoma = function($Element) {
-  store.selectedKoma = $Element;
-}
-store.unselectKoma = function() {
-  store.selectedKoma = null;
-}
+(function() {
 
 // 初期配置の配列
 var initPosition = [
@@ -89,7 +46,7 @@ var createKoma = function(position) {
   });
   // boardエレメントの子要素に追加する
   $Board.appendChild(komaFragment);
-}
+};
 
 // [関数]駒がクリックされたときの処理
 komaClickHundler = function($Element) {
@@ -109,18 +66,18 @@ komaClickHundler = function($Element) {
       return;
     }
   }
-}
+};
 
 // [関数]IDから座標を取得する -> [int, int]
 var getCoordinatesById = function(id) {
   var y = parseInt((id - 1) / 9) + 1;
   var x = 9 - (id - 1) % 9;
   return [x, y];
-}
+};
 // [関数]座標からIDを取得する -> int
 var getIdByCoordinates = function(coordinates) {
   return (coordinates[1] - 1) * 9 + (10 - coordinates[0]);
-}
+};
 
 // [関数]要素のエレメントを引数に取り、それが先手なのか後手なのか空白なのか -> string
 var getOwnerByElement = function($Element) {
@@ -131,15 +88,17 @@ var getOwnerByElement = function($Element) {
   } else {
     return "none";
   }
-}
+};
 
 // [関数]先手後手、駒の種類、座標を引数にとり、そのセルをその種類のコマに替える -> null
 var placeKoma = function(owner, kind, coordinates) {
   var cellId = "cell" + getIdByCoordinates(coordinates);
   var $Element = document.getElementById(cellId);
   $Element.className = "cell" + " " + owner + " " + kind;
-}
+};
 
 // 初期配置を生成
 createKoma(initPosition);
+
+})();
 
