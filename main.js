@@ -23,17 +23,24 @@ store.changeTurn = function() {
     store.turn = "white";
   }
 }
-// 選択されているかどうか bool
-store.isSelected = false;
+
 // 選択されている駒 element
 store.selectedKoma = null;
+store.getSelectedKoma = function() {
+  return store.selectedKoma;
+}
+store.isSelected = function() {
+  if (store.selectedKoma) {
+    return true;
+  } else {
+    return false;
+  }
+}
 store.selectKoma = function($Element) {
-  store.isSelected = true;
   store.selectedKoma = $Element;
 }
 store.unselectKoma = function() {
-  store.isSelected = false;
-  store.selectedKoma = {};
+  store.selectedKoma = null;
 }
 
 // 初期配置の配列
@@ -86,20 +93,17 @@ var createKoma = function(position) {
 
 // [関数]駒がクリックされたときの処理
 komaClickHundler = function($Element) {
-  console.log([store.turn, store.isSelected, store.selectedKoma], getOwnerByElement($Element), );
   var cellId = $Element.id.substr(4);
   var coordinates = getCoordinatesById(cellId);
-  if (store.isSelected) {
-    var $SelectedElement = store.selectedKoma;
+  if (store.isSelected()) {
+    var $SelectedElement = store.getSelectedKoma();
     $Element.className = $SelectedElement.className;
-    $SelectedElement.className = "cell"
-    store.isSelected = false;
-    store.selectedKoma = null;
+    $SelectedElement.className = "cell";
+    store.unselectKoma();
     store.changeTurn();
   } else {
     if (getOwnerByElement($Element) === store.getTurn()) {
-      store.isSelected = true;
-      store.selectedKoma = $Element;
+      store.selectKoma($Element);
       return;
     } else {
       return;
