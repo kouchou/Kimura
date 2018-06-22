@@ -1,66 +1,53 @@
 // ストア
-var store = new Object();
+var store = {
+  board_: null,
+  hands_: {
+    "white": {"HI": 0, "KA": 0, "KI": 0, "GI": 0, "KE": 0, "KY": 0, "FU": 0},
+    "black": {"HI": 0, "KA": 0, "KI": 0, "GI": 0, "KE": 0, "KY": 0, "FU": 0}
+  },
+  turn_: "white",
+  selectedItem_: null,
+  kifu_: []
+};
 // 盤面
-store.board = null;
 store.getBoard = function() {
-  return store.board;
+  return store.board_;
 };
 store.setBoard = function(board) {
-  store.board = board;
-};
-// 持ち駒
-store.hands = {
-  "white": {"HI": 0, "KA": 0, "KI": 0, "GI": 0, "KE": 0, "KY": 0, "FU": 0},
-  "black": {"HI": 0, "KA": 0, "KI": 0, "GI": 0, "KE": 0, "KY": 0, "FU": 0}
-};
-store.getHands = function(owner) {
-  return store.hands[owner];
-};
-store.addHands = function(owner, kind) {
-  store.hands[owner][kind]++;
-};
-store.removeHands = function(owner, kind) {
-  store.hands[owner][kind]--;
-}
-// 手番 String
-store.turn = "white";
-store.getTurn = function() {
-  return store.turn;
-};
-store.changeTurn = function() {
-  if (store.turn === "white") {
-    store.turn = "black";
-  } else {
-    store.turn = "white";
-  }
+  store.board_ = board
 };
 
+// 持ち駒
+store.getHands = function(owner) {
+  return store.hands_[owner];
+};
+store.addHands = function(owner, kind) {
+  store.hands_[owner][kind]++;
+};
+store.removeHands = function(owner, kind) {
+  store.hands_[owner][kind]--;
+}
+
+// 手番 String
+store.getTurn = function() {
+  return store.turn_;
+};
+store.setTurn = function(owner) {
+  store.turn_ = owner;
+}
+
 // 選択されている駒 element
-store.selectedKoma = null;
-store.getSelectedKoma = function() {
-  return store.selectedKoma;
+store.getSelectedItem = function() {
+  return store.selectedItem_;
 };
-store.isSelected = function() {
-  if (store.selectedKoma) {
-    return true;
-  } else {
-    return false;
-  }
+store.setSelectedItem = function($Element) {
+  store.selectedItem_ = $Element;
 };
-store.selectKoma = function($Element) {
-  store.selectedKoma = $Element;
-};
-store.unselectKoma = function() {
-  store.selectedKoma = null;
-};
+
 // 棋譜
-// [{"count": int, "owner": string, "kind": string, "from": [int, int], "to": [int, int], "nari": bool}, {...}]
-store.kifu = [];
+store.getKifu = function() {
+  return store.kifu_;
+};
 store.addKifu = function(owner, kind, from, to, nari) {
-  if (store.kifu.length > 0) {
-    var count = store.kifu[store.kifu.length - 1] + 1;
-    store.kifu.push({"count": count, "owner": owner, "kind": kind, "from": from, "to": to, "nari": nari});
-  } else {
-    store.kifu.push({"count": 1, "owner": owner, "kind": kind, "from": from, "to": to, "nari": nari});
-  }
+    store.kifu_.push({"owner": owner, "kind": kind, "from": from, "to": to, "nari": nari});
 };

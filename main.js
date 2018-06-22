@@ -1,4 +1,4 @@
-(function() {
+var Koma = {};
 // [関数]与えられた配置の配列に従って盤面を生成する -> null
 var createKoma = function(position) {
   // #boardのelementを取得
@@ -83,6 +83,7 @@ var placeKoma = function(owner, kind, coordinates) {
   $Element.className = "cell" + " " + owner + " " + kind;
 };
 
+
 //-------------------------------------------------------------------------------
 //  main
 //-------------------------------------------------------------------------------
@@ -105,4 +106,3 @@ store.setBoard(initPosition);
 
 // 初期配置を生成
 createKoma(store.getBoard());
-})();
