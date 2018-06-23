@@ -52,14 +52,14 @@ Koma.create = function(position) {
       // イベントリスナーを設定
       $Element.onclick = function(event) {
         Koma.komaClickHundler_(event.target);
-      }
+      };
       // 空のオブジェクトならそのまま追加して次のループへ
       if (!Object.keys(cell).length) {
         komaFragment.appendChild($Element);
         return;
       }
-      $Element.classList.add(cell["owner"]);
-      $Element.classList.add(cell["kind"]);
+      $Element.classList.add(cell.owner);
+      $Element.classList.add(cell.kind);
       komaFragment.appendChild($Element);
     });
   });
