@@ -90,7 +90,7 @@ Koma.getOwnerByElement = function($Element) {
 };
 
 // 先手後手、駒の種類、座標を引数にとり、そのセルをその種類のコマに置き替える -> null
-Koma.placeKoma = function(owner, kind, coordinates) {
+Koma.place = function(owner, kind, coordinates) {
   var cellId = "cell" + Koma.getIdByCoordinates(coordinates);
   var $Element = document.getElementById(cellId);
   $Element.className = "cell" + " " + owner + " " + kind;
