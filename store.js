@@ -40,8 +40,8 @@ Store.setTurn = function(owner) {
 Store.getSelectedItem = function() {
   return Store.selectedItem_;
 };
-Store.setSelectedItem = function($Element) {
-  Store.selectedItem_ = $Element;
+Store.setSelectedItem = function(item) {
+  Store.selectedItem_ = item;
 };
 
 // 棋譜
