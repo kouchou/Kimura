@@ -1,5 +1,5 @@
 // ストア
-var store = {
+var Store = {
   board_: null,
   hands_: {
     "white": {"HI": 0, "KA": 0, "KI": 0, "GI": 0, "KE": 0, "KY": 0, "FU": 0},
@@ -10,44 +10,44 @@ var store = {
   kifu_: []
 };
 // 盤面
-store.getBoard = function() {
-  return store.board_;
+Store.getBoard = function() {
+  return Store.board_;
 };
-store.setBoard = function(board) {
-  store.board_ = board
+Store.setBoard = function(board) {
+  Store.board_ = board
 };
 
 // 持ち駒
-store.getHands = function(owner) {
-  return store.hands_[owner];
+Store.getHands = function(owner) {
+  return Store.hands_[owner];
 };
-store.addHands = function(owner, kind) {
-  store.hands_[owner][kind]++;
+Store.addHands = function(owner, kind) {
+  Store.hands_[owner][kind]++;
 };
-store.removeHands = function(owner, kind) {
-  store.hands_[owner][kind]--;
+Store.removeHands = function(owner, kind) {
+  Store.hands_[owner][kind]--;
 }
 
 // 手番 String
-store.getTurn = function() {
-  return store.turn_;
+Store.getTurn = function() {
+  return Store.turn_;
 };
-store.setTurn = function(owner) {
-  store.turn_ = owner;
+Store.setTurn = function(owner) {
+  Store.turn_ = owner;
 }
 
 // 選択されている駒 element
-store.getSelectedItem = function() {
-  return store.selectedItem_;
+Store.getSelectedItem = function() {
+  return Store.selectedItem_;
 };
-store.setSelectedItem = function($Element) {
-  store.selectedItem_ = $Element;
+Store.setSelectedItem = function($Element) {
+  Store.selectedItem_ = $Element;
 };
 
 // 棋譜
-store.getKifu = function() {
-  return store.kifu_;
+Store.getKifu = function() {
+  return Store.kifu_;
 };
-store.addKifu = function(owner, kind, from, to, nari) {
-    store.kifu_.push({"owner": owner, "kind": kind, "from": from, "to": to, "nari": nari});
+Store.addKifu = function(owner, kind, from, to, nari) {
+    Store.kifu_.push({"owner": owner, "kind": kind, "from": from, "to": to, "nari": nari});
 };
