@@ -35,6 +35,13 @@ Koma.changeTurn_ = function() {
     }
 };
 
+Koma.getKomaAtBoard_ = function(id) {
+  var board = Store.getBoard();
+  var row = parseInt((id - 1) / 9);
+  var col = (id - 1) % 9;
+  return board[row][col];
+};
+
 // Public Functions
 // ----------------------------------------------------------------
 // 与えられた配置の配列に従って盤面を生成する -> null
