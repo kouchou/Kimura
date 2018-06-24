@@ -9,6 +9,17 @@ var Koma = {};
 Koma.komaClickHundler_ = function($Element) {
   if (Store.getSelectedItem()) {
     var $SelectedElement = Store.getSelectedItem();
+    // boardステータスを更新
+    // 選択した駒で置き換え
+    Koma.changeKomaAtBoard_(
+      Koma.getIdByElement($Element),
+      Koma.getKomaAtBoard_(Koma.getIdByElement($SelectedElement))
+    );
+    // もともとあった駒を空に
+    Koma.changeKomaAtBoard_(
+      Koma.getIdByElement($SelectedElement),
+      {}
+    );
     // 選択されている駒のクラス名を上書き
     $Element.className = $SelectedElement.className;
     // もともとあった位置を通常のセルに戻す
@@ -35,12 +46,14 @@ Koma.changeTurn_ = function() {
     }
 };
 
+// 駒のIDから、boardステータスの駒オブジェクトを取得
 Koma.getKomaAtBoard_ = function(id) {
   var board = Store.getBoard();
   var row = parseInt((id - 1) / 9);
   var col = (id - 1) % 9;
   return board[row][col];
 };
+// 指定した駒のIDの駒を、指定した駒オブジェクトで置き換える
 Koma.changeKomaAtBoard_ = function(id, koma) {
   var board = Store.getBoard();
   var row = parseInt((id - 1) / 9);
