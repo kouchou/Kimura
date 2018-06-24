@@ -41,6 +41,13 @@ Koma.getKomaAtBoard_ = function(id) {
   var col = (id - 1) % 9;
   return board[row][col];
 };
+Koma.changeKomaAtBoard_ = function(id, koma) {
+  var board = Store.getBoard();
+  var row = parseInt((id - 1) / 9);
+  var col = (id - 1) % 9;
+  board[row][col] = koma;
+  Store.setBoard(board);
+};
 
 // Public Functions
 // ----------------------------------------------------------------
