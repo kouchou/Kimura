@@ -8,10 +8,16 @@ var Koma = {};
 // [関数]駒がクリックされたときの処理
 Koma.komaClickHundler_ = function($Element) {
   if (Store.getSelectedItem()) {
+    // 選択状態の時
     var $SelectedElement = Store.getSelectedItem();
     var elementId = Koma.getIdByElement($Element);
     var selectedElementId = Koma.getIdByElement($SelectedElement);
+    // 棋譜を追加
+    // -----------------------------------------------
+    Koma.addKifu_($SelectedElement, $Element);
+    
     // boardステータスを更新
+    // -----------------------------------------------
     // 選択した駒で置き換え
     Koma.changeKomaAtBoard_(
       elementId,
@@ -22,6 +28,9 @@ Koma.komaClickHundler_ = function($Element) {
       selectedElementId,
       {}
     );
+    
+    // DOM操作
+    // -----------------------------------------------
     // 選択されている駒のクラス名を上書き
     $Element.className = $SelectedElement.className;
     // もともとあった位置を通常のセルに戻す
@@ -31,6 +40,7 @@ Koma.komaClickHundler_ = function($Element) {
     // 手番交代
     Koma.changeTurn_();
   } else {
+    // 未選択状態の時
     // 現在の手番と、クリックした駒の所有者が同じ場合、選択状態へ
     if (Koma.getOwnerByElement($Element) === Store.getTurn()) {
       Store.setSelectedItem($Element);
@@ -62,6 +72,16 @@ Koma.changeKomaAtBoard_ = function(id, koma) {
   var col = (id - 1) % 9;
   board[row][col] = koma;
   Store.setBoard(board);
+};
+
+// 棋譜追加
+Koma.addKifu_ = function($ElementFrom, $ElementTo) {
+  var owner = Store.getTurn();
+  var kind = Koma.getKomaAtBoard_(Koma.getIdByElement($ElementFrom)).kind;
+  var from = Koma.getCoordinatesById(Koma.getIdByElement($ElementFrom));
+  var to = Koma.getCoordinatesById(Koma.getIdByElement($ElementTo));
+  var nari = "funari";
+  Store.addKifu(owner, kind, from, to, nari);
 };
 
 // Public Functions
