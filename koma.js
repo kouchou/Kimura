@@ -16,11 +16,7 @@ Koma.komaClickHundler_ = function($Element) {
     // 選択状態を解除
     Store.setSelectedItem(null);
     // 手番交代
-    if (Store.getTurn() === "white") {
-      Store.setTurn("black");
-    } else {
-      Store.setTurn("white");
-    }
+    Koma.changeTurn_();
   } else {
     // 現在の手番と、クリックした駒の所有者が同じ場合、選択状態へ
     if (Koma.getOwnerByElement($Element) === Store.getTurn()) {
@@ -28,6 +24,15 @@ Koma.komaClickHundler_ = function($Element) {
       return;
     }
   }
+};
+
+// 手番交代
+Koma.changeTurn_ = function() {
+    if (Store.getTurn() === "white") {
+      Store.setTurn("black");
+    } else {
+      Store.setTurn("white");
+    }
 };
 
 // Public Functions
@@ -67,6 +72,10 @@ Koma.create = function(position) {
   $Board.appendChild(komaFragment);
 };
 
+// エレメントからIDを取得する
+Koma.getIdByElement = function($Element) {
+  return $Element.id.substr(4);
+};
 // IDから座標を取得する -> [int, int]
 Koma.getCoordinatesById = function(id) {
   var y = parseInt((id - 1) / 9) + 1;
