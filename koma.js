@@ -9,15 +9,17 @@ var Koma = {};
 Koma.komaClickHundler_ = function($Element) {
   if (Store.getSelectedItem()) {
     var $SelectedElement = Store.getSelectedItem();
+    var elementId = Koma.getIdByElement($Element);
+    var selectedElementId = Koma.getIdByElement($SelectedElement);
     // boardステータスを更新
     // 選択した駒で置き換え
     Koma.changeKomaAtBoard_(
-      Koma.getIdByElement($Element),
-      Koma.getKomaAtBoard_(Koma.getIdByElement($SelectedElement))
+      elementId,
+      Koma.getKomaAtBoard_(selectedElementId)
     );
     // もともとあった駒を空に
     Koma.changeKomaAtBoard_(
-      Koma.getIdByElement($SelectedElement),
+      selectedElementId,
       {}
     );
     // 選択されている駒のクラス名を上書き
