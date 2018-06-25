@@ -42,5 +42,5 @@
 }
 
 .black {
-  transform:rotateX(180deg);
+  transform:scale(-1, -1);
 }
