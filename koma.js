@@ -8,7 +8,29 @@ var Koma = {};
 // [関数]駒がクリックされたときの処理
 Koma.komaClickHundler_ = function($Element) {
   if (Store.getSelectedItem()) {
+    // 選択状態の時
     var $SelectedElement = Store.getSelectedItem();
+    var elementId = Koma.getIdByElement($Element);
+    var selectedElementId = Koma.getIdByElement($SelectedElement);
+    // 棋譜を追加
+    // -----------------------------------------------
+    Koma.addKifu_($SelectedElement, $Element);
+    
+    // boardステータスを更新
+    // -----------------------------------------------
+    // 選択した駒で置き換え
+    Koma.changeKomaAtBoard_(
+      elementId,
+      Koma.getKomaAtBoard_(selectedElementId)
+    );
+    // もともとあった駒を空に
+    Koma.changeKomaAtBoard_(
+      selectedElementId,
+      {}
+    );
+    
+    // DOM操作
+    // -----------------------------------------------
     // 選択されている駒のクラス名を上書き
     $Element.className = $SelectedElement.className;
     // もともとあった位置を通常のセルに戻す
@@ -16,18 +38,50 @@ Koma.komaClickHundler_ = function($Element) {
     // 選択状態を解除
     Store.setSelectedItem(null);
     // 手番交代
-    if (Store.getTurn() === "white") {
-      Store.setTurn("black");
-    } else {
-      Store.setTurn("white");
-    }
+    Koma.changeTurn_();
   } else {
+    // 未選択状態の時
     // 現在の手番と、クリックした駒の所有者が同じ場合、選択状態へ
     if (Koma.getOwnerByElement($Element) === Store.getTurn()) {
       Store.setSelectedItem($Element);
       return;
     }
   }
+};
+
+// 手番交代
+Koma.changeTurn_ = function() {
+    if (Store.getTurn() === "white") {
+      Store.setTurn("black");
+    } else {
+      Store.setTurn("white");
+    }
+};
+
+// 駒のIDから、boardステータスの駒オブジェクトを取得
+Koma.getKomaAtBoard_ = function(id) {
+  var board = Store.getBoard();
+  var row = parseInt((id - 1) / 9);
+  var col = (id - 1) % 9;
+  return board[row][col];
+};
+// 指定した駒のIDの駒を、指定した駒オブジェクトで置き換える
+Koma.changeKomaAtBoard_ = function(id, koma) {
+  var board = Store.getBoard();
+  var row = parseInt((id - 1) / 9);
+  var col = (id - 1) % 9;
+  board[row][col] = koma;
+  Store.setBoard(board);
+};
+
+// 棋譜追加
+Koma.addKifu_ = function($ElementFrom, $ElementTo) {
+  var owner = Store.getTurn();
+  var kind = Koma.getKomaAtBoard_(Koma.getIdByElement($ElementFrom)).kind;
+  var from = Koma.getCoordinatesById(Koma.getIdByElement($ElementFrom));
+  var to = Koma.getCoordinatesById(Koma.getIdByElement($ElementTo));
+  var nari = "funari";
+  Store.addKifu(owner, kind, from, to, nari);
 };
 
 // Public Functions
@@ -67,6 +121,10 @@ Koma.create = function(position) {
   $Board.appendChild(komaFragment);
 };
 
+// エレメントからIDを取得する
+Koma.getIdByElement = function($Element) {
+  return $Element.id.substr(4);
+};
 // IDから座標を取得する -> [int, int]
 Koma.getCoordinatesById = function(id) {
   var y = parseInt((id - 1) / 9) + 1;
